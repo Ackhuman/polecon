@@ -1,0 +1,21 @@
+<div class="series-picker">
+  <h1>
+    Available Data Points
+  </h1>
+  <div *ngFor="let seriesItem of series$ | async" class="card m-1">
+    <div class="card-body">
+      <div class="card-title">
+        {{seriesItem.name}}
+      </div>
+      <div class="card-subtitle text-muted" *ngIf="seriesItem.unit">
+        {{seriesItem.unit.name}}
+      </div>
+      <span *ngIf="seriesItem.description" class="card-body">
+        {{seriesItem.description}}
+      </span>
+    </div>
+    <div class="card-footer">
+      <button class="btn btn-primary" (click)="selectDataPoint(seriesItem.id)">Add to Chart</button>
+    </div>
+  </div>
+</div>
