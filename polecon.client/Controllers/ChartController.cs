@@ -28,9 +28,16 @@ namespace polecon.web.Controllers
         public async Task<List<DataPoint>> GetDataPoint(int? id = null) =>
             await Service.GetDataPoint(id);
 
-        [HttpGet, Route("[action]")]
-        public Task<List<ChartSeries>> GetData(params int[] dataPointIds) =>
-            Service.GetData(dataPointIds);
-        
+        [HttpPost, Route("[action]")]
+        public async Task<List<ScatterSeries<int, decimal?>>> GetData(ChartDataRequest request) =>
+            await Service.GetDataSingle(request);
+
+        [HttpPost, Route("[action]")]
+        public List<LineSeries> GetLineSeries(ChartDataRequest request) =>
+            Service.GetLineSeries(request);
+
+        [HttpPost, Route("[action]")]
+        public Task<List<string>> GetDateCategories(ChartDataRequest request) =>
+            Service.GetDateCategories(request);
     }
 }

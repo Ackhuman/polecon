@@ -13,7 +13,10 @@ namespace polecon.service.Service
     {
         Task<List<Series>> GetSeries(int? id = null);
         Task<List<DataPoint>> GetDataPoint(int? id = null);
-        Task<List<ChartSeries>> GetData(int[] dataPointId);
+        Task<List<ScatterSeries<int, decimal?>>> GetDataSingle(ChartDataRequest request);
+        List<ScatterSeries<int[], decimal?[]>> GetDataPaired(int[][] dataPointIds);
+        List<LineSeries> GetLineSeries(ChartDataRequest request);
+        Task<List<string>> GetDateCategories(ChartDataRequest request);
     }
 
     public class ChartService : IChartService
@@ -36,21 +39,41 @@ namespace polecon.service.Service
             return query.ToListAsync();
         }
 
-        public Task<List<ChartSeries>> GetData(int[] dataPointIds) =>
-            Db.DataPoint
-                .Where(dp => dataPointIds.Contains(dp.Id))
-                .GroupJoin(
-                    Db.Observation
-                        .Where(o => dataPointIds.Contains(o.DataPointId)),
-                    dp => dp.Id,
-                    d => d.DataPointId,
-                    (dp, d) => new ChartSeries
-                    {
-                        DataPointId = dp.Id,
-                        Name = dp.Name,
-                        Data = d.Select(_d => _d.Value).ToList()
-                    }
-                ).ToListAsync();
+        public async Task<List<ScatterSeries<int, decimal?>>> GetDataSingle(ChartDataRequest request)
+        {
+            try
+            {
+                return (await DataQuery(request)
+                    .ToListAsync())
+                    .GroupBy(o => o.DataPoint, o => o.Value)
+                    .Select(o => new ScatterSeries<int, decimal?> {
+                        Id = o.Key.Id,
+                        Name = o.Key.Name,
+                        Data = o.ToList()
+                    }).ToList();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        public List<ScatterSeries<int[], decimal?[]>> GetDataPaired(int[][] dataPointIds) =>
+            dataPointIds.Select(pair =>
+                new ScatterSeries<int[], decimal?[]>
+                {
+                    Id = pair,
+                    Data = Db.Observation.Include(o => o.DataPoint)
+                        .Where(o => o.DataPointId == pair[0])
+                        .Select(o => o.Value)
+                        .Zip(
+                            Db.Observation
+                                .Where(o => o.DataPointId == pair[1])
+                                .Select(o => o.Value),
+                            (item1, item2) => new[] {item1, item2}
+                        ).ToList()
+                }).ToList();
 
         public Task<List<Series>> GetSeries(int? id = null)
         {
@@ -60,6 +83,74 @@ namespace polecon.service.Service
                 query = query.Where(s => s.Id == id.Value);
             }
             return query.ToListAsync();
+        }
+
+        public Task<List<string>> GetDateCategories(ChartDataRequest request)
+        {
+            var observationQuery = DataQuery(request);
+            return observationQuery
+                .Select(o => o.Date.Value.Year)
+                .Distinct()
+                .OrderBy(o => o)
+                .Select(o => o.ToString())
+                .ToListAsync();
+        }
+
+        public List<LineSeries> GetLineSeries(ChartDataRequest request)
+        {
+            return DataQuery(request)
+                .OrderBy(o => o.Date.Value)
+                .AsEnumerable()
+                .GroupBy(
+                    o => o.DataPoint,
+                    o => o.Value
+                ).Select(o => new LineSeries
+                {
+                    Name = $"{o.Key.Name}, {o.Key.Unit.Name} (D:{o.Key.Id})",
+                    Data = request.MovingAveragePeriod.HasValue
+                        ? MovingAverage(o.ToList(), request.MovingAveragePeriod.Value)
+                        : o.ToList()
+                }).ToList();
+        }
+
+        private List<decimal?> MovingAverage(List<decimal?> values, int period)
+        {
+            var window = new Queue<decimal?>(period);
+            var results = new List<decimal?>();
+            foreach (var value in values)
+            {
+                if (window.Count == period)
+                {
+                    var average = window.Average();
+                    results.Add(average);
+                    window.Dequeue();
+                }
+                window.Enqueue(value);
+            }
+            return results;
+        }
+
+        private IQueryable<Observation> DataQuery(ChartDataRequest request)
+        {
+            var observationQuery = Db.Observation
+                .Include(o => o.DataPoint)
+                .ThenInclude(d => d.Unit)
+                .Where(o =>
+                    request.DataPointIds.Contains(o.DataPointId)
+                );
+            if (request.YearMin.HasValue)
+            {
+                observationQuery = observationQuery.Where(o => o.Date.Value.Year > request.YearMin);
+            }
+            if (request.YearMax.HasValue)
+            {
+                observationQuery = observationQuery.Where(o => o.Date.Value.Year < request.YearMax);
+            }
+            if (request.IncludeNulls != true)
+            {
+                observationQuery = observationQuery.Where(o => o.Value.HasValue);
+            }
+            return observationQuery;
         }
     }
 }

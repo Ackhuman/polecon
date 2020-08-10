@@ -16,7 +16,9 @@
     "paths": {
       "app/*": [ "app/*" ],
       "chart/*": [ "app/chart/*" ],
-      "home/*": [ "app/home/*" ]
+      "home/*": [ "app/home/*" ],
+      "models/*": [ "app/core/models/*" ],
+      "api/*":  [ "app/core/services/*" ] 
     },
     "lib": [
       "es2017",

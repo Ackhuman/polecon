@@ -1,8 +1,9 @@
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router'
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
+import { } from 'bootstrap'
 import { AppRoutingModule, PoleconPreloadingStrategy } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
@@ -10,16 +11,18 @@ import { HomeComponent } from './home/home.component';
 import { ChartModule } from 'chart/chart.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavMenuComponent,
-    HomeComponent,
-  ],
   imports: [
+    FormsModule,
+    RouterModule,
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
     AppRoutingModule
+  ],
+  declarations: [
+    AppComponent,
+    NavMenuComponent,
+    HomeComponent,
   ],
   providers: [
     PoleconPreloadingStrategy

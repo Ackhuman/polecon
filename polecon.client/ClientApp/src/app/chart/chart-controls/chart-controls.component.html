@@ -1,3 +1,7 @@
-<p>
-  chart-controls works!
-</p>
+<div class="form">
+  <div class="form-group">
+    <select class="form-control" [(ngModel)]="chartType">
+      <option *ngFor="let chartTypeOption of chartTypeOptions" [value]="chartTypeOption.key">{{chartTypeOption.label}}</option>
+    </select>
+  </div>
+</div>

@@ -29,6 +29,24 @@
     <ProjectReference Include="..\polecon.service\polecon.service.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="ClientApp\src\app\core\models\chartDataRequest.model.ts">
+      <CustomToolNamespace>..\polecon.service\ClientModel\ChartDataRequest.cs</CustomToolNamespace>
+    </None>
+    <None Update="ClientApp\src\app\core\models\chartSeries.model.ts">
+      <CustomToolNamespace>..\polecon.service\ClientModel\ChartSeries.cs</CustomToolNamespace>
+    </None>
+    <None Update="ClientApp\src\app\core\models\scatterSeries.model.ts">
+      <CustomToolNamespace>..\polecon.service\ClientModel\ScatterSeries.cs</CustomToolNamespace>
+    </None>
+    <None Update="ClientApp\src\app\core\services\apiClients.module.ts">
+      <CustomToolNamespace>Controllers\ChartController.cs</CustomToolNamespace>
+    </None>
+    <None Update="ClientApp\src\app\core\services\chart.apiClient.ts">
+      <CustomToolNamespace>Controllers\ChartController.cs</CustomToolNamespace>
+    </None>
+  </ItemGroup>
+
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
     <!-- Ensure Node.js is installed -->
     <Exec Command="node --version" ContinueOnError="true">

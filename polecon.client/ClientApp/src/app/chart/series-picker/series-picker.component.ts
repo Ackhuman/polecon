@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import {ApiClientService} from 'chart/api-client.service';
+import { ChartController } from 'api/chart.apiClient';
 
 @Component({
   selector: 'series-picker',
@@ -17,7 +17,7 @@ export class SeriesPickerComponent implements OnInit {
       switchMap(() => this.api.getDataPoint())
     );
   constructor(
-    private api: ApiClientService
+    private api: ChartController
   ) { }
 
   ngOnInit() {
