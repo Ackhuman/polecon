@@ -16,18 +16,6 @@ export class SpecificChartComponent implements OnInit {
 
   xDataPointIds = [64];
   yDataPointIds = [1, 4, 5, 6, 9, 10, 13, 17, 20, 21, 34, 42, 43, 51];
-  movingAveragePeriod: number = null;
-
-  yearMin = 1450;
-  yearMax = 1620;
-  includeNulls: boolean = true;
-  chartTypeOptions = [
-    { key: 'line', label: 'Line', fn: this.getLineChart },
-    { key: 'scatter', label: 'Scatter', fn: null },
-    { key: 'histogram', label: 'Histogram', fn: this.getHistogram }
-  ];
-  chartType = this.chartTypeOptions[0];
-  dataPointList: string = "64, 1, 4, 5, 6, 9, 10, 13, 17, 20, 21, 34, 42, 43, 51";
 
   Highcharts: typeof Highcharts = Highcharts;
   options: Highcharts.Options = {
@@ -50,29 +38,11 @@ export class SpecificChartComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.refreshChart();
+    
   }
 
-  setChartDefaults() {
-    this.yearMin = null;
-    this.yearMax = null;
-    this.includeNulls = true;
-    this.chartType = this.chartTypeOptions[0];
-    this.movingAveragePeriod = null;
-    this.dataPointList = "64, 4, 5";
-  }
 
-  getLineChart() {
-    let dataPoints = this.xDataPointIds
-      .concat(this.yDataPointIds);
-    let request: ChartDataRequest = Object.assign(
-      {
-        dataPointIds: dataPoints,
-        yearMin: this.yearMin,
-        yearMax: this.yearMax
-      },
-      this.movingAveragePeriod > 0 ? { movingAveragePeriod: this.movingAveragePeriod } : null
-    );
+  getLineChart(request: ChartDataRequest) {
     let dataQueries = forkJoin(
       this.api.getLineSeries(request),
       this.api.getDateCategories(request)
@@ -82,20 +52,7 @@ export class SpecificChartComponent implements OnInit {
       this.renderChart(null, options);
     });
   }
-
-  getChartRequestObject(): ChartDataRequest {
-    let dataPointIds = this.dataPointList.split(',')
-      .map(dp => parseInt(dp.trim()));
-    let request: ChartDataRequest = {
-      dataPointIds: dataPointIds,
-      yearMax: this.yearMax,
-      yearMin: this.yearMin,
-      movingAveragePeriod: this.movingAveragePeriod,
-      includeNulls: this.includeNulls
-    }
-    return request;
-  }
-
+  
   getLineChartOptions(results: any[]): Highcharts.Options {
     let data = results[0];
     let categories = results[1];
@@ -110,8 +67,8 @@ export class SpecificChartComponent implements OnInit {
     return options;
   }
 
-  refreshChart() {
-    this.getLineChart();
+  refreshChart(request: ChartDataRequest) {
+    this.getLineChart(request);
     //this.getHistogram(64);
     //this.getHistogram(4, 'supplementalChartContainer');
   }

@@ -1,21 +1,56 @@
-<div class="series-picker">
-  <h1>
-    Available Data Points
-  </h1>
-  <div *ngFor="let seriesItem of series$ | async" class="card m-1">
-    <div class="card-body">
-      <div class="card-title">
-        {{seriesItem.name}}
-      </div>
-      <div class="card-subtitle text-muted" *ngIf="seriesItem.unit">
-        {{seriesItem.unit.name}}
-      </div>
-      <span *ngIf="seriesItem.description" class="card-body">
-        {{seriesItem.description}}
-      </span>
+<div class="row">
+  <button class="btn btn-link" (click)="selectAll()">Select All</button>
+  <button class="btn btn-link" (click)="reset()">Reset</button>
+</div>
+<div class="row">
+  <div class="card col-6">
+    <div class="card-header">
+      Available Data Points
     </div>
-    <div class="card-footer">
-      <button class="btn btn-primary" (click)="selectDataPoint(seriesItem.id)">Add to Chart</button>
+    <div class="card-body">
+      <div *ngFor="let dataPoint of unselectedDataPoints" class="card m-1">
+        <div class="card-header">
+          <div class="card-title">
+            {{dataPoint.name}}
+          </div>
+          <div class="card-subtitle text-muted" *ngIf="dataPoint.unit">
+            {{dataPoint.unit.name}}
+          </div>
+        </div>
+        <div class="card-body">
+          <ng-container *ngIf="dataPoint.description">
+            {{dataPoint.description}}
+          </ng-container>
+        </div>
+        <div class="card-footer">
+          <button class="btn btn-primary" (click)="selectDataPoint(dataPoint.id)">Add</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card col-6">
+    <div class="card-header">
+      Selected Data Points
+    </div>
+    <div class="card-body">
+      <div *ngFor="let dataPoint of selectedDataPoints" class="card m-1">
+        <div class="card-header">
+          <div class="card-title">
+            {{dataPoint.name}}
+          </div>
+          <div class="card-subtitle text-muted">
+            {{dataPoint.unit.name}}
+          </div>
+        </div>
+        <div class="card-body">
+          <ng-container *ngIf="dataPoint.description">
+            {{dataPoint.description}}
+          </ng-container>
+        </div>
+        <div class="card-footer">
+          <button class="btn btn-primary" (click)="removeDataPoint(dataPoint.id)">Remove</button>
+        </div>
+      </div>
     </div>
   </div>
 </div>

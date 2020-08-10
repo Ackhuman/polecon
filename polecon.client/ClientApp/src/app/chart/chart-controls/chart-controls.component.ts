@@ -1,64 +1,51 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Subject, Observable, forkJoin } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
-import { ChartClientConfig } from 'chart/chart-client-config';
-import { ChartController } from 'api/chart.apiClient';
+import { ChartDataRequest } from 'models/chartDataRequest.model';
 
 @Component({
-  selector: 'app-chart-controls',
+  selector: 'chart-controls',
   templateUrl: './chart-controls.component.html',
   styleUrls: ['./chart-controls.component.css']
 })
-export class ChartControlsComponent implements OnInit {
-  @Input() series: any[] = [];
-  @Input() selectedSeries = 0;
+export class ChartControlsComponent {
+  @Output() render = new EventEmitter<ChartDataRequest>();
 
-  @Input() dataSeries: any[] = [];
-  @Output() dataSeriesChange = new EventEmitter<any[]>();
+  movingAveragePeriod: number = null;
 
-  @Input() chartConfig: ChartClientConfig;
-  @Output() chartConfigChange = new EventEmitter<ChartClientConfig>();
-
-  render$ = new Subject<any>();
- 
-  constructor(
-    private api: ChartController
-  ) { }
-  
-  chartTypeOptions: any[] = [
-    {key:'scatter', label: 'Scatter plot'},
-    {key:'bar', label: 'Bar Chart'}
+  yearMin = 1450;
+  yearMax = 1620;
+  includeNulls: boolean = true;
+  chartTypeOptions = [
+    { key: 'line', label: 'Line' },
+    { key: 'scatter', label: 'Scatter' },
+    { key: 'histogram', label: 'Histogram' }
   ];
+  chartType = this.chartTypeOptions[0];
+  dataPointList: string = "64, 1, 4, 5, 6, 9, 10, 13, 17, 20, 21, 34, 42, 43, 51";
 
-  ngOnInit() {
+  renderClick() {
+    let request = this.getChartRequestObject();
+    this.render.emit(request);
   }
 
-  renderChart() {
-    let singleSeries = this.series
-      .filter(s => s.length === 1)
-      .map(s => s[0]);
-    let pairedSeries: any[][] = this.series.filter(s => s.length === 2);
-    
-    //forkJoin(
-    //  this.api.getData(singleSeries),
-    //  this.api.getPairedData(pairedSeries)
-    //).subscribe(series => {
-    //  this.dataSeries.push([...series]);
-    //  this.dataSeriesChange.emit(this.dataSeries);
-    //});
+  setChartDefaults() {
+    this.yearMin = null;
+    this.yearMax = null;
+    this.includeNulls = true;
+    this.chartType = this.chartTypeOptions[0];
+    this.movingAveragePeriod = null;
+    this.dataPointList = "64, 4, 5";
   }
 
-  addSeries() {
-    this.series.push([]);
-    this.selectedSeries++;
+  getChartRequestObject(): ChartDataRequest {
+    let dataPointIds = this.dataPointList.split(',')
+      .map(dp => parseInt(dp.trim()));
+    let request: ChartDataRequest = {
+      dataPointIds: dataPointIds,
+      yearMax: this.yearMax,
+      yearMin: this.yearMin,
+      movingAveragePeriod: this.movingAveragePeriod,
+      includeNulls: this.includeNulls
+    }
+    return request;
   }
-
-  addDataPointToSeries(dataPointId: number) {
-    this.series[this.selectedSeries].push(dataPointId);
-  }
-
-  removeSeries(index: number) {
-    this.series = this.series.splice(index, 1);
-  }
-
 }
