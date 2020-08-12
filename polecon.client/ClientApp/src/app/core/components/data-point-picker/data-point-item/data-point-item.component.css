@@ -1,0 +1,11 @@
+.data-point {
+  border: 1px solid #bbb;
+  border-radius: 2px;
+  background: #ddd;
+  font-size: 11pt;
+}
+
+.data-point ng-text {
+  position: absolute;
+  top: 5px;
+}

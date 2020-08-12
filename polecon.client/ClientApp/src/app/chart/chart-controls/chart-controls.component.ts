@@ -20,7 +20,7 @@ export class ChartControlsComponent {
     { key: 'histogram', label: 'Histogram' }
   ];
   chartType = this.chartTypeOptions[0];
-  dataPointList: string = "64, 1, 4, 5, 6, 9, 10, 13, 17, 20, 21, 34, 42, 43, 51";
+  dataPointIds: number[] = [];
 
   renderClick() {
     let request = this.getChartRequestObject();
@@ -33,19 +33,20 @@ export class ChartControlsComponent {
     this.includeNulls = true;
     this.chartType = this.chartTypeOptions[0];
     this.movingAveragePeriod = null;
-    this.dataPointList = "64, 4, 5";
   }
 
   getChartRequestObject(): ChartDataRequest {
-    let dataPointIds = this.dataPointList.split(',')
-      .map(dp => parseInt(dp.trim()));
     let request: ChartDataRequest = {
-      dataPointIds: dataPointIds,
+      dataPointIds: this.dataPointIds,
       yearMax: this.yearMax,
       yearMin: this.yearMin,
       movingAveragePeriod: this.movingAveragePeriod,
       includeNulls: this.includeNulls
     }
     return request;
+  }
+
+  selectDataPoints(dataPointIds: number[]) {
+    this.dataPointIds = dataPointIds.map(dp => dp.id);
   }
 }

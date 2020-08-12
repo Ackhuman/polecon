@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { ChartModule } from 'chart/chart.module';
+import { CoreModule } from './core/core.module';
 
 @NgModule({
   imports: [
@@ -17,12 +18,13 @@ import { ChartModule } from 'chart/chart.module';
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
+    CoreModule,
     AppRoutingModule
   ],
   declarations: [
     AppComponent,
     NavMenuComponent,
-    HomeComponent,
+    HomeComponent
   ],
   providers: [
     PoleconPreloadingStrategy

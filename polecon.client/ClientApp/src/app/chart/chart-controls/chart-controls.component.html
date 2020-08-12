@@ -6,36 +6,43 @@
   </div>
   <div class="collapse show card-body" id="chartControls">
     <div class="row">
-      <div class="form-group col-2">
-        <label for="chartType">Chart Type</label>
-        <select id="chartType" class="form-control mx-2" [(ngModel)]="chartType">
-          <option *ngFor="let type of chartTypeOptions" [value]="type">{{type.label}}</option>
-        </select>
+      <div class="col-6">
+        <div class="row">
+          <div class="form-group col-2">
+            <label for="chartType">Chart Type</label>
+            <select id="chartType" class="form-control mx-2" [(ngModel)]="chartType">
+              <option *ngFor="let type of chartTypeOptions" [value]="type">{{type.label}}</option>
+            </select>
+          </div>
+          <div class="col">
+            <button class="btn btn-primary" (click)="renderClick()">Refresh</button>
+            <button class="btn btn-link" (click)="setChartDefaults()">Reset</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-3">
+            <label for="yearMinControl">Min Year (leave blank to show all)</label>
+            <input id="yearMinControl" type="text" class="form-control w-75" [(ngModel)]="yearMin" />
+          </div>
+          <div class="form-group col-3">
+            <label for="yearMaxControl">Max Year (leave blank to show all)</label>
+            <input id="yearMaxControl" type="text" class="form-control w-75" [(ngModel)]="yearMax" />
+          </div>
+          <div class="form-group col">
+            <label for="movingAverageControl">Moving Average Period (0 = No Moving Average)</label>
+            <input id="movingAverageControl" type="text" class="form-control w-50" [(ngModel)]="movingAveragePeriod" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col" *ngIf="chartType.key !== 'histogram'">
+            <label for="includeNulls">Include Nulls</label>
+            <input id="includeNulls" class="form-check-inline mx-2" type="checkbox" [(ngModel)]="includeNulls" />
+          </div>
+        </div>
       </div>
-      <div class="form-group col-4">
-        <label for="dataPoints">Enter data points, separated by commas.</label>
-        <textarea id="dataPoints" class="form-control" [(ngModel)]="dataPointList"></textarea>
+      <div class="col-6">
+        <data-point-picker (dataPointSelect)="selectDataPoints($event)"></data-point-picker>
       </div>
     </div>
-    <div class="row">
-      <div class="form-group col-3">
-        <label for="yearMinControl">Min Year (leave blank to show all)</label>
-        <input id="yearMinControl" type="text" class="form-control w-75" [(ngModel)]="yearMin" />
-      </div>
-      <div class="form-group col-3">
-        <label for="yearMaxControl">Max Year (leave blank to show all)</label>
-        <input id="yearMaxControl" type="text" class="form-control w-75" [(ngModel)]="yearMax" />
-      </div>
-      <div class="form-group col-4">
-        <label for="movingAverageControl">Moving Average Period (0 = No Moving Average)</label>
-        <input id="movingAverageControl" type="text" class="form-control w-50" [(ngModel)]="movingAveragePeriod" />
-      </div>
-    </div>
-    <div class="form-group" *ngIf="chartType.key !== 'histogram'">
-      <label for="includeNulls">Include Nulls</label>
-      <input id="includeNulls" class="form-check-inline mx-2" type="checkbox" [(ngModel)]="includeNulls" />
-    </div>
-    <button class="btn btn-primary" (click)="renderClick()">Refresh</button>
-    <button class="btn btn-link" (click)="setChartDefaults()">Reset</button>
   </div>
 </div>

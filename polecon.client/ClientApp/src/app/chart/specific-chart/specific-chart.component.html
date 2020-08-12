@@ -1,3 +1,11 @@
-<chart-controls (render)="refreshChart($event)"></chart-controls>
-<div id="chartContainer"></div>
+<div [hidden]="showChart">
+  <ng-container *ngTemplateOutlet="chartPlaceholder"></ng-container>
+</div>
+<div [hidden]="!showChart"><div id="chartContainer"></div></div>
 <div id="supplementalChartContainer"></div>
+<chart-controls (render)="refreshChart($event)"></chart-controls>
+<ng-template #chartPlaceholder>
+  <div id="chartPlaceholder">
+    <p>Your chart will go here.</p>
+  </div>
+</ng-template>

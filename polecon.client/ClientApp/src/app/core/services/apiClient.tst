@@ -111,7 +111,11 @@ export class $Name {
 
   $Methods[
   // $DocComment
-  $name = ($Parameters[$name$HasDefaultValue[?]: $MappedType][, ]): Observable<$ExpectedReturnType> => {
+  public $name($Parameters[$name$HasDefaultValue[?]: ($MappedType|'')][, ]): Observable<$ExpectedReturnType> {
+    $Parameters[if(!$name) {
+      $name = '';
+    }][
+    ]
     return this.http.$HttpMethod(`${this.baseUrl}$Url`$IsPostMethod[, $RequestData ]);
   }]
 }]

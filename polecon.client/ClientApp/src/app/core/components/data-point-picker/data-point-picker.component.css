@@ -1,0 +1,17 @@
+.series-picker {
+  height: 500px;
+  width: 500px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+  .add-data-point:focus {
+    border: none;
+    box-shadow: none;
+  }
+  data-point-item {
+    cursor: pointer;
+  }
+  data-point-item:hover {
+    box-shadow: #ccc 2px;
+  }

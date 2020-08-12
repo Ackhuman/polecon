@@ -1,0 +1,16 @@
+#chartPlaceholder {
+  height: 300px;
+  width: 95%;
+  background: #eee;
+  border: 1px #999;
+  color: #999;
+  font-size: 11pt;
+  text-align: center;
+  margin: 20px;
+}
+
+  #chartPlaceholder > p {
+    vertical-align: middle;
+    top: 45%;
+    position: relative;
+  }

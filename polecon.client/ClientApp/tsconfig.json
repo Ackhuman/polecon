@@ -18,7 +18,8 @@
       "chart/*": [ "app/chart/*" ],
       "home/*": [ "app/home/*" ],
       "models/*": [ "app/core/models/*" ],
-      "api/*":  [ "app/core/services/*" ] 
+      "api/*": [ "app/core/services/*" ],
+      "core/*": ["app/core/*", "app/core/components/*" ] 
     },
     "lib": [
       "es2017",

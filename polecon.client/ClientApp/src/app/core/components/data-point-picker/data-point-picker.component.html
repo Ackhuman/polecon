@@ -1,0 +1,40 @@
+<div class="row">
+  <button class="btn btn-link" (click)="selectAll()">Select All</button>
+  <button class="btn btn-link" (click)="reset()">Reset</button>
+</div>
+<div class="row">
+  <ng-container *ngTemplateOutlet="unselectedPanel"></ng-container>
+  <ng-container *ngTemplateOutlet="selectedPanel"></ng-container>
+</div>
+
+<ng-template #unselectedPanel>
+  <div class="card col-6">
+    <div class="card-header">
+      Available Data Points
+    </div>
+    <div class="card-body">
+      <div class="justify-content-sm-center">
+        <span class="spinner-border" *ngIf="isLoading"></span>
+      </div>
+      <ng-container *ngFor="let dataPoint of unselectedDataPoints">
+        <data-point-item [dataPointItem]="dataPoint"  (click)="selectDataPoint(dataPoint.id)">
+          <i octicon="plus"></i>
+        </data-point-item>
+      </ng-container>
+    </div>
+  </div>
+</ng-template>
+<ng-template #selectedPanel>
+  <div class="card col-6">
+    <div class="card-header">
+      Selected Data Points
+    </div>
+    <div class="card-body">
+      <ng-container *ngFor="let dataPoint of selectedDataPoints">
+        <data-point-item [dataPointItem]="dataPoint" (click)="removeDataPoint(dataPoint.id)">
+          <i octicon="dash"></i>
+        </data-point-item>
+      </ng-container>
+    </div>
+  </div>
+</ng-template>

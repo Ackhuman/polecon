@@ -20,7 +20,8 @@ export class SpecificChartComponent implements OnInit {
   Highcharts: typeof Highcharts = Highcharts;
   options: Highcharts.Options = {
     title: {
-      text: 'Goods priced in marks vs debasement of the mark'
+      text: 'Goods priced in marks vs debasement of the mark',
+      chart: 450
     },
     chart: {
       //height: 600
@@ -31,6 +32,7 @@ export class SpecificChartComponent implements OnInit {
       }
     }
   };
+  showChart: boolean = false;
 
   constructor(
     private api: ChartController
@@ -123,6 +125,7 @@ export class SpecificChartComponent implements OnInit {
   }
 
   renderChart(selector?: string, options?: Highcharts.Options) {
+    this.showChart = true;
     Highcharts.chart(selector || "chartContainer", options || this.options);
   }
 

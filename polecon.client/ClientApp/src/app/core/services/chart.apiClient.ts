@@ -20,23 +20,38 @@ export class ChartController {
 
   
   // 
-  getSeries = (id?: number): Observable<any> => {
+  public getSeries(id?: (number|'')): Observable<any> {
+    if(!id) {
+      id = '';
+    }
     return this.http.get(`${this.baseUrl}api/Chart/getSeries?id=${id}`);
   }
   // 
-  getDataPoint = (id?: number): Observable<any> => {
+  public getDataPoint(id?: (number|'')): Observable<any> {
+    if(!id) {
+      id = '';
+    }
     return this.http.get(`${this.baseUrl}api/Chart/getDataPoint?id=${id}`);
   }
   // 
-  getData = (request: ChartDataRequest): Observable<any> => {
+  public getData(request: (ChartDataRequest|'')): Observable<any> {
+    if(!request) {
+      request = '';
+    }
     return this.http.post(`${this.baseUrl}api/Chart/getData`, request );
   }
   // 
-  getLineSeries = (request: ChartDataRequest): Observable<any> => {
+  public getLineSeries(request: (ChartDataRequest|'')): Observable<any> {
+    if(!request) {
+      request = '';
+    }
     return this.http.post(`${this.baseUrl}api/Chart/getLineSeries`, request );
   }
   // 
-  getDateCategories = (request: ChartDataRequest): Observable<any> => {
+  public getDateCategories(request: (ChartDataRequest|'')): Observable<any> {
+    if(!request) {
+      request = '';
+    }
     return this.http.post(`${this.baseUrl}api/Chart/getDateCategories`, request );
   }
 }
