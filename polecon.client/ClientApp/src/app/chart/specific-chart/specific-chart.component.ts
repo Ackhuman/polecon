@@ -20,11 +20,10 @@ export class SpecificChartComponent implements OnInit {
   Highcharts: typeof Highcharts = Highcharts;
   options: Highcharts.Options = {
     title: {
-      text: 'Goods priced in marks vs debasement of the mark',
-      chart: 450
+      text: 'Goods priced in marks vs debasement of the mark'
     },
     chart: {
-      //height: 600
+      height: 400
     },
     plotOptions: {
       histogram: {
