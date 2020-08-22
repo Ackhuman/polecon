@@ -12,6 +12,13 @@
   data-point-item {
     cursor: pointer;
   }
+  data-point-item.disabled {
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+  data-point-item i {
+    color: #aaa;
+  }
   data-point-item:hover {
     box-shadow: #ccc 2px;
   }

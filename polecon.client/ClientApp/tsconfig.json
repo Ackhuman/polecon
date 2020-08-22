@@ -16,6 +16,7 @@
     "paths": {
       "app/*": [ "app/*" ],
       "chart/*": [ "app/chart/*" ],
+      "report/*":  [ "app/report/*" ], 
       "home/*": [ "app/home/*" ],
       "models/*": [ "app/core/models/*" ],
       "api/*": [ "app/core/services/*" ],

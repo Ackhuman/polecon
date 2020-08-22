@@ -20,6 +20,11 @@ export class ChartController {
 
   
   // 
+  public dataSets(): Observable<any> {
+    
+    return this.http.get(`${this.baseUrl}api/Chart/dataSets`);
+  }
+  // 
   public getSeries(id?: (number|'')): Observable<any> {
     if(!id) {
       id = '';
@@ -27,11 +32,11 @@ export class ChartController {
     return this.http.get(`${this.baseUrl}api/Chart/getSeries?id=${id}`);
   }
   // 
-  public getDataPoint(id?: (number|'')): Observable<any> {
-    if(!id) {
-      id = '';
+  public getDataPoint(dataSetId?: (number|'')): Observable<any> {
+    if(!dataSetId) {
+      dataSetId = '';
     }
-    return this.http.get(`${this.baseUrl}api/Chart/getDataPoint?id=${id}`);
+    return this.http.get(`${this.baseUrl}api/Chart/getDataPoint?dataSetId=${dataSetId}`);
   }
   // 
   public getData(request: (ChartDataRequest|'')): Observable<any> {

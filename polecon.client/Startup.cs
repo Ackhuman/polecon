@@ -38,10 +38,12 @@ namespace polecon.client
             {
                 configuration.RootPath = "ClientApp/dist";
             });
-            services.AddScoped<IChartService, ChartService>();
+            services.AddScoped<IChartService, ChartService>()
+                .AddScoped<IReportService, ReportService>()
+                .AddScoped<IIMfApi, ImfApiWrapper>();
             services.AddDbContext<DataContext>(options =>
             {
-                options.EnableSensitiveDataLogging(true);
+                options.EnableSensitiveDataLogging();
                 options.EnableDetailedErrors();
             });
         }

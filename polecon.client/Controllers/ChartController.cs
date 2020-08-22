@@ -21,12 +21,15 @@ namespace polecon.web.Controllers
         }
 
         [HttpGet, Route("[action]")]
+        public Task<List<DataSet>> DataSets() => Service.GetDataSets();
+
+        [HttpGet, Route("[action]")]
         public async Task<List<Series>> GetSeries(int? id = null) => 
            await Service.GetSeries(id);
 
         [HttpGet, Route("[action]")]
-        public async Task<List<DataPoint>> GetDataPoint(int? id = null) =>
-            await Service.GetDataPoint(id);
+        public async Task<List<DataPoint>> GetDataPoint(int? dataSetId = null) =>
+            await Service.GetDataPoint(dataSetId);
 
         [HttpPost, Route("[action]")]
         public async Task<List<ScatterSeries<int, decimal?>>> GetData(ChartDataRequest request) =>

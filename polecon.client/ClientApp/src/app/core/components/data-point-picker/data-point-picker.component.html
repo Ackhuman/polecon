@@ -1,4 +1,10 @@
 <div class="row">
+  <select (change)="onDataSetSelected($event.target.value)" [value]="dataSets[0]">
+    <option *ngFor="let dataSet of dataSets" [value]="dataSet.dataSetId">{{dataSet.name}}</option>
+    <option [value]="null">Show All (May Take a While)</option>
+  </select>
+</div>
+<div class="row">
   <button class="btn btn-link" (click)="selectAll()">Select All</button>
   <button class="btn btn-link" (click)="reset()">Reset</button>
 </div>
@@ -17,7 +23,7 @@
         <span class="spinner-border" *ngIf="isLoading"></span>
       </div>
       <ng-container *ngFor="let dataPoint of unselectedDataPoints">
-        <data-point-item [dataPointItem]="dataPoint"  (click)="selectDataPoint(dataPoint.id)">
+        <data-point-item [dataPointItem]="dataPoint" [ngClass]="{ 'disabled': !canSelect }" (click)="selectDataPoint(dataPoint.id)">
           <i octicon="plus"></i>
         </data-point-item>
       </ng-container>

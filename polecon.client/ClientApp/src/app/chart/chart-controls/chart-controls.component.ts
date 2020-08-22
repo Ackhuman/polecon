@@ -46,7 +46,7 @@ export class ChartControlsComponent {
     return request;
   }
 
-  selectDataPoints(dataPointIds: number[]) {
+  selectDataPoints(dataPointIds: any[]) {
     this.dataPointIds = dataPointIds.map(dp => dp.id);
   }
 }

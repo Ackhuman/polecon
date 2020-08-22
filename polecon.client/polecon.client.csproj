@@ -40,10 +40,13 @@
       <CustomToolNamespace>..\polecon.service\ClientModel\ScatterSeries.cs</CustomToolNamespace>
     </None>
     <None Update="ClientApp\src\app\core\services\apiClients.module.ts">
-      <CustomToolNamespace>Controllers\ChartController.cs</CustomToolNamespace>
+      <CustomToolNamespace>Controllers\ReportController.cs</CustomToolNamespace>
     </None>
     <None Update="ClientApp\src\app\core\services\chart.apiClient.ts">
       <CustomToolNamespace>Controllers\ChartController.cs</CustomToolNamespace>
+    </None>
+    <None Update="ClientApp\src\app\core\services\report.apiClient.ts">
+      <CustomToolNamespace>Controllers\ReportController.cs</CustomToolNamespace>
     </None>
   </ItemGroup>
 

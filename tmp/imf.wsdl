@@ -1,0 +1,412 @@
+<wsdl:definitions xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.imf.org/SDMX" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://www.imf.org/SDMX">
+<wsdl:types>
+<s:schema elementFormDefault="qualified" targetNamespace="http://www.imf.org/SDMX">
+<s:element name="GetMaxSeriesInResult">
+<s:complexType/>
+</s:element>
+<s:element name="GetMaxSeriesInResultResponse">
+<s:complexType>
+<s:sequence>
+<s:element minOccurs="1" maxOccurs="1" name="GetMaxSeriesInResultResult" type="s:int"/>
+</s:sequence>
+</s:complexType>
+</s:element>
+<s:element name="GetDataflow">
+<s:complexType/>
+</s:element>
+<s:element name="GetDataflowResponse">
+<s:complexType>
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="GetDataflowResult">
+<s:complexType>
+<s:sequence>
+<s:any processContents="lax"/>
+</s:sequence>
+</s:complexType>
+</s:element>
+</s:sequence>
+</s:complexType>
+</s:element>
+<s:element name="GetDataStructure">
+<s:complexType>
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="queryMessage">
+<s:complexType>
+<s:sequence>
+<s:any processContents="lax"/>
+</s:sequence>
+</s:complexType>
+</s:element>
+</s:sequence>
+</s:complexType>
+</s:element>
+<s:element name="GetDataStructureResponse">
+<s:complexType>
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="GetDataStructureResult">
+<s:complexType>
+<s:sequence>
+<s:any processContents="lax"/>
+</s:sequence>
+</s:complexType>
+</s:element>
+</s:sequence>
+</s:complexType>
+</s:element>
+<s:element name="GetCompactData">
+<s:complexType>
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="queryMessage">
+<s:complexType>
+<s:sequence>
+<s:any processContents="lax"/>
+</s:sequence>
+</s:complexType>
+</s:element>
+</s:sequence>
+</s:complexType>
+</s:element>
+<s:element name="GetCompactDataResponse">
+<s:complexType>
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="GetCompactDataResult">
+<s:complexType>
+<s:sequence>
+<s:any processContents="lax"/>
+</s:sequence>
+</s:complexType>
+</s:element>
+</s:sequence>
+</s:complexType>
+</s:element>
+<s:element name="GetMetadataStructure">
+<s:complexType>
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="queryMessage">
+<s:complexType>
+<s:sequence>
+<s:any processContents="lax"/>
+</s:sequence>
+</s:complexType>
+</s:element>
+</s:sequence>
+</s:complexType>
+</s:element>
+<s:element name="GetMetadataStructureResponse">
+<s:complexType>
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="GetMetadataStructureResult">
+<s:complexType>
+<s:sequence>
+<s:any processContents="lax"/>
+</s:sequence>
+</s:complexType>
+</s:element>
+</s:sequence>
+</s:complexType>
+</s:element>
+<s:element name="GetGenericMetadata">
+<s:complexType>
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="queryMessage">
+<s:complexType>
+<s:sequence>
+<s:any processContents="lax"/>
+</s:sequence>
+</s:complexType>
+</s:element>
+</s:sequence>
+</s:complexType>
+</s:element>
+<s:element name="GetGenericMetadataResponse">
+<s:complexType>
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="GetGenericMetadataResult">
+<s:complexType>
+<s:sequence>
+<s:any processContents="lax"/>
+</s:sequence>
+</s:complexType>
+</s:element>
+</s:sequence>
+</s:complexType>
+</s:element>
+<s:element name="GetServiceVersion">
+<s:complexType/>
+</s:element>
+<s:element name="GetServiceVersionResponse">
+<s:complexType>
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="GetServiceVersionResult" type="s:string"/>
+</s:sequence>
+</s:complexType>
+</s:element>
+<s:element name="GetCodeList">
+<s:complexType>
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="queryMessage">
+<s:complexType>
+<s:sequence>
+<s:any processContents="lax"/>
+</s:sequence>
+</s:complexType>
+</s:element>
+</s:sequence>
+</s:complexType>
+</s:element>
+<s:element name="GetCodeListResponse">
+<s:complexType>
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="GetCodeListResult">
+<s:complexType>
+<s:sequence>
+<s:any processContents="lax"/>
+</s:sequence>
+</s:complexType>
+</s:element>
+</s:sequence>
+</s:complexType>
+</s:element>
+</s:schema>
+</wsdl:types>
+<wsdl:message name="GetMaxSeriesInResultSoapIn">
+<wsdl:part name="parameters" element="tns:GetMaxSeriesInResult"/>
+</wsdl:message>
+<wsdl:message name="GetMaxSeriesInResultSoapOut">
+<wsdl:part name="parameters" element="tns:GetMaxSeriesInResultResponse"/>
+</wsdl:message>
+<wsdl:message name="GetDataflowSoapIn">
+<wsdl:part name="parameters" element="tns:GetDataflow"/>
+</wsdl:message>
+<wsdl:message name="GetDataflowSoapOut">
+<wsdl:part name="parameters" element="tns:GetDataflowResponse"/>
+</wsdl:message>
+<wsdl:message name="GetDataStructureSoapIn">
+<wsdl:part name="parameters" element="tns:GetDataStructure"/>
+</wsdl:message>
+<wsdl:message name="GetDataStructureSoapOut">
+<wsdl:part name="parameters" element="tns:GetDataStructureResponse"/>
+</wsdl:message>
+<wsdl:message name="GetCompactDataSoapIn">
+<wsdl:part name="parameters" element="tns:GetCompactData"/>
+</wsdl:message>
+<wsdl:message name="GetCompactDataSoapOut">
+<wsdl:part name="parameters" element="tns:GetCompactDataResponse"/>
+</wsdl:message>
+<wsdl:message name="GetMetadataStructureSoapIn">
+<wsdl:part name="parameters" element="tns:GetMetadataStructure"/>
+</wsdl:message>
+<wsdl:message name="GetMetadataStructureSoapOut">
+<wsdl:part name="parameters" element="tns:GetMetadataStructureResponse"/>
+</wsdl:message>
+<wsdl:message name="GetGenericMetadataSoapIn">
+<wsdl:part name="parameters" element="tns:GetGenericMetadata"/>
+</wsdl:message>
+<wsdl:message name="GetGenericMetadataSoapOut">
+<wsdl:part name="parameters" element="tns:GetGenericMetadataResponse"/>
+</wsdl:message>
+<wsdl:message name="GetServiceVersionSoapIn">
+<wsdl:part name="parameters" element="tns:GetServiceVersion"/>
+</wsdl:message>
+<wsdl:message name="GetServiceVersionSoapOut">
+<wsdl:part name="parameters" element="tns:GetServiceVersionResponse"/>
+</wsdl:message>
+<wsdl:message name="GetCodeListSoapIn">
+<wsdl:part name="parameters" element="tns:GetCodeList"/>
+</wsdl:message>
+<wsdl:message name="GetCodeListSoapOut">
+<wsdl:part name="parameters" element="tns:GetCodeListResponse"/>
+</wsdl:message>
+<wsdl:portType name="ASMXSDMXServiceSoap">
+<wsdl:operation name="GetMaxSeriesInResult">
+<wsdl:input message="tns:GetMaxSeriesInResultSoapIn"/>
+<wsdl:output message="tns:GetMaxSeriesInResultSoapOut"/>
+</wsdl:operation>
+<wsdl:operation name="GetDataflow">
+<wsdl:input message="tns:GetDataflowSoapIn"/>
+<wsdl:output message="tns:GetDataflowSoapOut"/>
+</wsdl:operation>
+<wsdl:operation name="GetDataStructure">
+<wsdl:input message="tns:GetDataStructureSoapIn"/>
+<wsdl:output message="tns:GetDataStructureSoapOut"/>
+</wsdl:operation>
+<wsdl:operation name="GetCompactData">
+<wsdl:input message="tns:GetCompactDataSoapIn"/>
+<wsdl:output message="tns:GetCompactDataSoapOut"/>
+</wsdl:operation>
+<wsdl:operation name="GetMetadataStructure">
+<wsdl:input message="tns:GetMetadataStructureSoapIn"/>
+<wsdl:output message="tns:GetMetadataStructureSoapOut"/>
+</wsdl:operation>
+<wsdl:operation name="GetGenericMetadata">
+<wsdl:input message="tns:GetGenericMetadataSoapIn"/>
+<wsdl:output message="tns:GetGenericMetadataSoapOut"/>
+</wsdl:operation>
+<wsdl:operation name="GetServiceVersion">
+<wsdl:input message="tns:GetServiceVersionSoapIn"/>
+<wsdl:output message="tns:GetServiceVersionSoapOut"/>
+</wsdl:operation>
+<wsdl:operation name="GetCodeList">
+<wsdl:input message="tns:GetCodeListSoapIn"/>
+<wsdl:output message="tns:GetCodeListSoapOut"/>
+</wsdl:operation>
+</wsdl:portType>
+<wsdl:binding name="ASMXSDMXServiceSoap" type="tns:ASMXSDMXServiceSoap">
+<soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+<wsdl:operation name="GetMaxSeriesInResult">
+<soap:operation soapAction="http://www.imf.org/SDMX/GetMaxSeriesInResult" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="GetDataflow">
+<soap:operation soapAction="http://www.imf.org/SDMX/GetDataflow" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="GetDataStructure">
+<soap:operation soapAction="http://www.imf.org/SDMX/GetDataStructure" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="GetCompactData">
+<soap:operation soapAction="http://www.imf.org/SDMX/GetCompactData" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="GetMetadataStructure">
+<soap:operation soapAction="http://www.imf.org/SDMX/GetMetadataStructure" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="GetGenericMetadata">
+<soap:operation soapAction="http://www.imf.org/SDMX/GetGenericMetadata" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="GetServiceVersion">
+<soap:operation soapAction="http://www.imf.org/SDMX/GetServiceVersion" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="GetCodeList">
+<soap:operation soapAction="http://www.imf.org/SDMX/GetCodeList" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+</wsdl:binding>
+<wsdl:binding name="ASMXSDMXServiceSoap12" type="tns:ASMXSDMXServiceSoap">
+<soap12:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+<wsdl:operation name="GetMaxSeriesInResult">
+<soap12:operation soapAction="http://www.imf.org/SDMX/GetMaxSeriesInResult" style="document"/>
+<wsdl:input>
+<soap12:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap12:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="GetDataflow">
+<soap12:operation soapAction="http://www.imf.org/SDMX/GetDataflow" style="document"/>
+<wsdl:input>
+<soap12:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap12:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="GetDataStructure">
+<soap12:operation soapAction="http://www.imf.org/SDMX/GetDataStructure" style="document"/>
+<wsdl:input>
+<soap12:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap12:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="GetCompactData">
+<soap12:operation soapAction="http://www.imf.org/SDMX/GetCompactData" style="document"/>
+<wsdl:input>
+<soap12:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap12:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="GetMetadataStructure">
+<soap12:operation soapAction="http://www.imf.org/SDMX/GetMetadataStructure" style="document"/>
+<wsdl:input>
+<soap12:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap12:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="GetGenericMetadata">
+<soap12:operation soapAction="http://www.imf.org/SDMX/GetGenericMetadata" style="document"/>
+<wsdl:input>
+<soap12:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap12:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="GetServiceVersion">
+<soap12:operation soapAction="http://www.imf.org/SDMX/GetServiceVersion" style="document"/>
+<wsdl:input>
+<soap12:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap12:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="GetCodeList">
+<soap12:operation soapAction="http://www.imf.org/SDMX/GetCodeList" style="document"/>
+<wsdl:input>
+<soap12:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap12:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+</wsdl:binding>
+<wsdl:service name="ASMXSDMXService">
+<wsdl:port name="ASMXSDMXServiceSoap" binding="tns:ASMXSDMXServiceSoap">
+<soap:address location="http://dataservices.imf.org/sdmx20/SDMX_Web_Service.asmx"/>
+</wsdl:port>
+<wsdl:port name="ASMXSDMXServiceSoap12" binding="tns:ASMXSDMXServiceSoap12">
+<soap12:address location="http://dataservices.imf.org/sdmx20/SDMX_Web_Service.asmx"/>
+</wsdl:port>
+</wsdl:service>
+</wsdl:definitions>

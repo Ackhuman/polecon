@@ -12,6 +12,7 @@ namespace polecon.service.Service
     public interface IChartService
     {
         Task<List<Series>> GetSeries(int? id = null);
+        Task<List<DataSet>> GetDataSets();
         Task<List<DataPoint>> GetDataPoint(int? id = null);
         Task<List<ScatterSeries<int, decimal?>>> GetDataSingle(ChartDataRequest request);
         List<ScatterSeries<int[], decimal?[]>> GetDataPaired(int[][] dataPointIds);
@@ -27,14 +28,16 @@ namespace polecon.service.Service
             Db = db;
         }
 
-        public Task<List<DataPoint>> GetDataPoint(int? id = null)
+        public Task<List<DataSet>> GetDataSets() => Db.DataSet.ToListAsync();
+
+        public Task<List<DataPoint>> GetDataPoint(int? dataSetId = null)
         {
             var query = Db.DataPoint
                 .Include(dp => dp.Unit)
                 .AsQueryable();
-            if (id.HasValue)
+            if (dataSetId.HasValue)
             {
-                query = query.Where(d => d.Id == id.Value);
+                query = query.Where(d => d.DataSetId == dataSetId);
             }
             return query.ToListAsync();
         }
@@ -102,15 +105,26 @@ namespace polecon.service.Service
                 .OrderBy(o => o.Date.Value)
                 .AsEnumerable()
                 .GroupBy(
-                    o => o.DataPoint,
-                    o => o.Value
+                    o => o.DataPoint
                 ).Select(o => new LineSeries
                 {
                     Name = $"{o.Key.Name}, {o.Key.Unit.Name} (D:{o.Key.Id})",
-                    Data = request.MovingAveragePeriod.HasValue
-                        ? MovingAverage(o.ToList(), request.MovingAveragePeriod.Value)
-                        : o.ToList()
+                    Data = AggregateObservations(request, o)
                 }).ToList();
+        }
+
+        private List<decimal?> AggregateObservations(ChartDataRequest request, IGrouping<DataPoint, Observation> observations)
+        {
+            //todo: support more than just annual observations
+            var annualObservations = observations
+                .GroupBy(o => o.Date.Value.Year)
+                .Select(o => o.Average(_o => _o.Value));
+            if (request.MovingAveragePeriod.HasValue)
+            {
+                annualObservations = MovingAverage(annualObservations.ToList(), request.MovingAveragePeriod.Value);
+            }
+
+            return annualObservations.ToList();
         }
 
         private List<decimal?> MovingAverage(List<decimal?> values, int period)
