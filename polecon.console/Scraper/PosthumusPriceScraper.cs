@@ -10,14 +10,15 @@ using polecon.service.Service;
 
 namespace polecon.console.Scraper
 {
-    public class PosthumusPriceScraper : WebScraper
+    public class PosthumusPriceScraper : WebScraper, IBatchScraper
     {
-        public PosthumusPriceScraper(IMemDbDataImportService service, int start, int expectedNumResults)
+        public int ExpectedNumResults { get; private set; } = 103780;
+        public PosthumusPriceScraper(IMemDbDataImportService service, int start)
         {
             Service = service;
             Start = start;
             Stopwatch = new Stopwatch();
-            End = Math.Min(expectedNumResults, start + RecordInterval);
+            End = Math.Min(ExpectedNumResults, start + RecordInterval);
         }
 
         private IMemDbDataImportService Service { get; }
@@ -45,11 +46,33 @@ namespace polecon.console.Scraper
                 UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36"
             };
 
+        private void GetExpectedResults(Response response)
+        {
+            var resultsNode = response.QuerySelectorAll("b")
+                .FirstOrDefault(node => node.TextContent.Contains("matches were found for your query"));
+            if(resultsNode == null)
+            {
+                return;
+            }
+            var numResultsStr = resultsNode
+                .TextContentClean
+                .Replace("matches were found for your query", "")
+                .Trim();
+            if (int.TryParse(numResultsStr, out var numResults))
+            {
+                ExpectedNumResults = numResults;
+            }
+        }
+
         public override void Parse(Response response)
         {
             if (response.Html.Contains("Sorry, no matches were found for the following query"))
             {
                 throw new ArgumentException("No matches were found for the query. Try fixing the form data.");
+            } 
+            if (response.Html.Contains("matches were found for your query"))
+            {
+                GetExpectedResults(response);
             }
             Stopwatch.Restart();
             //this is an old web page that uses tables to do layout, so there will be some extra rows

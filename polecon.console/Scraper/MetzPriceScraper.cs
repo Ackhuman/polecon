@@ -10,8 +10,9 @@ using polecon.service.Service;
 
 namespace polecon.console.Scraper
 {
-    public class MetzPriceScraper : WebScraper
+    public class MetzPriceScraper : WebScraper, IBatchScraper
     {
+        public int ExpectedNumResults { get; private set; } = 103780;
         public MetzPriceScraper(IMemDbDataImportService service, int start, int expectedNumResults)
         {
             Service = service;
@@ -47,6 +48,10 @@ namespace polecon.console.Scraper
             if (response.Html.Contains("Sorry, no matches were found for the following query"))
             {
                 throw new ArgumentException("No matches were found for the query. Try fixing the form data.");
+            }
+            if (response.Html.Contains("matches were found for your query"))
+            {
+                GetExpectedResults(response);
             }
             Stopwatch.Restart();
             //this is an old web page that uses tables to do layout, so there will be some extra rows
@@ -93,6 +98,23 @@ namespace polecon.console.Scraper
             return formData;
         }
 
+        private void GetExpectedResults(Response response)
+        {
+            var resultsNode = response.QuerySelectorAll("b")
+                .FirstOrDefault(node => node.TextContent.Contains("matches were found for your query"));
+            if (resultsNode == null)
+            {
+                return;
+            }
+            var numResultsStr = resultsNode
+                .TextContentClean
+                .Replace("matches were found for your query", "")
+                .Trim();
+            if (int.TryParse(numResultsStr, out var numResults))
+            {
+                ExpectedNumResults = numResults;
+            }
+        }
         private MemDbEntry ParseRow(HtmlNode row)
         {
             var cells = row.GetElementsByTagName("td[align]");
